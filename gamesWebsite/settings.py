@@ -42,8 +42,6 @@ INSTALLED_APPS = [
     'rest_framework',
 
     # My apps
-
-    'home',
     'frontend',
 ]
 

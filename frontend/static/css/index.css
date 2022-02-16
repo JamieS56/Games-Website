@@ -1,0 +1,9 @@
+.icon{
+    border: solid black 1px;
+    border-radius: 20px;
+    height:100px;
+    max-width: 100px;
+}
+#search-bar{
+    border-radius: 10%;
+}

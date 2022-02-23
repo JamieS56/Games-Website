@@ -5,12 +5,24 @@ import Icon  from "./Icon";
 import { render } from "react-dom";
 
 function GetAllIcons(){
-    let allIcons = [1, 2, 3, 4, 5, 6]
-    let iconsList = allIcons.map(function(allIcons){
-        return <Icon key={allIcons.toString()}/>
-    })
+    var allGames = {
+        1: "0/X",
+        2: "rps",
+        3: "line game",
+        4: "Chess"
 
-    return <div id='gamesContainer'>{ iconsList }</div>
+    }
+    var allIcons = []
+    let row = <div className='row justify-content-around'><Icon/><Icon/></div>
+    let numIcons = 6
+    let numRows = numIcons/2
+
+        for (var i = 0; i < numRows; i++) {
+            allIcons.push(row)
+        }
+            
+        return allIcons
+
 
 
 }
@@ -18,7 +30,7 @@ function GetAllIcons(){
  
 function HomePage(){
     return(
-        <div>
+        <div className="center mx-auto">
 
             <h1>Home Page</h1>
 

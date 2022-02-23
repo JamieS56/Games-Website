@@ -1,9 +1,13 @@
 .icon{
     border: solid black 1px;
     border-radius: 20px;
-    height:100px;
-    max-width: 100px;
+    height:110px;
+    max-width: 110px;
+    margin: 20px 0;
 }
 #search-bar{
     border-radius: 10%;
+}
+.center{
+    text-align: center;
 }

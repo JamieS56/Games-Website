@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { render } from "react-dom";
 import HomePage from "./HomePage";
-import Game from "./O-X";
+import Game from "./games/O-X/O-X";
 
 import {
   BrowserRouter as Router,
@@ -24,9 +24,7 @@ function MyRouter(){
 }
 
 export default class App extends Component {
-  constructor(props) {
-    super(props);
-  }
+
 
   render() { 
     return (

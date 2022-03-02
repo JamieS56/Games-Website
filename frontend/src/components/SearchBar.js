@@ -5,8 +5,13 @@ import InputGroup from 'react-bootstrap/InputGroup'
 
 function SearchBar(){
     return(
-        <Form>
-            <input type='text'></input>
+        <Form className="col-12">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control"  aria-label="Search Bar" aria-describedby="basic-addon2"/>
+                <div className="input-group-text" id="basic-addon2">
+                    <span className="material-icons">search</span>
+                </div>
+            </div>
         </Form>
     )
 }

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { render } from "react-dom";
 import { Link, NavLink } from 'react-router-dom'
+import Col from "react-bootstrap/esm/Col";
 
 export default class Icon extends React.Component{
     constructor(props){
@@ -14,12 +15,13 @@ export default class Icon extends React.Component{
     
     render() {
         return(
-            <Link className = 'col-6' to = {`${this.state.link}`}>
-                <div  className = 'icon'>
-                
-                    <div className='GamePicture'>{this.state.gamePicture}</div>
-                </div>
-            </Link>
+            <Col sm={6} md={4} lg={2}>
+                <Link to = {`${this.state.link}`}>
+                    <div  className = 'icon'>
+                        <div className='GamePicture'>{this.state.gamePicture}</div>
+                    </div>
+                </Link>
+            </Col>
         );
     }
     

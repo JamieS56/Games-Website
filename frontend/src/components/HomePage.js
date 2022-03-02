@@ -1,28 +1,37 @@
 import React, { Component } from "react";
-import SearchBar from "./SearchBar"
-import OXIcon from "./games/O-X/O-X-Icon"
 
-import Icon  from "./Icon";
-import { render } from "react-dom";
+import Row from "react-bootstrap/esm/Row";
+
+import SearchBar from "./SearchBar"
+import OXIcon from "./icons/O-X-Icon"
+import ChessIcon from "./icons/Chess-Icon";
+import Connect4Icon from "./icons/Connect-4-Icon";
+import LineGameIcon from "./icons/LineGame-Icon";
+import RPSIcon from "./icons/RPS-Icon";
+import SpeedDotsIcon from "./icons/SpeedDots-Icon";
+
+
 
 function GetAllIcons(){
     var allGames = {
-        1: "0/X",
-        2: "rps",
-        3: "line game",
-        4: "Chess"
+        1: <OXIcon key={1}/>,
+        2: <RPSIcon key={2}/>,
+        3: <LineGameIcon key={3}/>,
+        4: <ChessIcon key={4}/>,
+        5: <Connect4Icon key={5}/>,
+        6: <SpeedDotsIcon key={6}/>,
 
     }
     var allIcons = []
-    let row = <div className='row justify-content-around'><OXIcon/><Icon/></div>
     let numIcons = 6
     let numRows = numIcons/2
 
-        for (var i = 0; i < numRows; i++) {
-            allIcons.push(row)
-        }
+    for (const game in allGames) {
+        allIcons.push(allGames[game])
+    }
+  
             
-        return allIcons
+    return allIcons
 
 
 
@@ -40,7 +49,9 @@ function HomePage(){
             <div className="seperator"></div>
 
             <div className="container">
-                <GetAllIcons />
+                <Row>
+                    <GetAllIcons />
+                </Row>
             </div>
             
 

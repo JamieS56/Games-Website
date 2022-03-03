@@ -1,8 +1,12 @@
 import React, { Component } from "react";
 
 import Row from "react-bootstrap/esm/Row";
+import Offcanvas from 'react-bootstrap/Offcanvas'
+import Button from 'react-bootstrap/Button'
 
 import SearchBar from "./SearchBar"
+import Example from "./Leaderboard"
+
 import OXIcon from "./icons/O-X-Icon"
 import ChessIcon from "./icons/Chess-Icon";
 import Connect4Icon from "./icons/Connect-4-Icon";
@@ -53,9 +57,11 @@ function HomePage(){
                     <GetAllIcons />
                 </Row>
             </div>
-            
+
+            {/* <Example/> */}
 
         </div>
+        
         
     )
 }

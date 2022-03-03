@@ -3,7 +3,13 @@ import { render } from "react-dom";
 import { Link, NavLink } from 'react-router-dom'
 import Col from "react-bootstrap/esm/Col";
 
+
+
+
 export default class Icon extends React.Component{
+
+    
+
     constructor(props){
         super(props);
         this.state={
@@ -15,11 +21,15 @@ export default class Icon extends React.Component{
     
     render() {
         return(
-            <Col sm={6} md={4} lg={2}>
+            <Col xs={6} sm={4} md={3} lg={2}>
                 <Link to = {`${this.state.link}`}>
                     <div  className = 'icon'>
-                        <div className='GamePicture'>{this.state.gamePicture}</div>
-                    </div>
+                        <img src={this.state.gamePicture}/>
+                    </div>       
+         
+
+
+
                 </Link>
             </Col>
         );

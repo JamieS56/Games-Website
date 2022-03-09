@@ -3,7 +3,7 @@ import Offcanvas from 'react-bootstrap/Offcanvas'
 import Button from 'react-bootstrap/esm/Button'
 
 
-function Leaderboard() {
+function Profile() {
     const [show, setShow] = useState(false);
   
     const handleClose = () => setShow(false);
@@ -11,15 +11,15 @@ function Leaderboard() {
   
     return (
       <>
-        <Button id="leaderboard-button" className='offcanvas-button col-6' variant="primary" onClick={handleShow}>
+        <Button id="profile-button" className="offcanvas-button col-6" onClick={handleShow}>
         <span class="material-icons offcanvas-icon">
-          emoji_events
+            person
         </span>
         </Button>
   
-        <Offcanvas className='offcanvas-page' show={show} onHide={handleClose}>
+        <Offcanvas className='offcanvas-page' show={show} onHide={handleClose}  placement={'end'}>
           <Offcanvas.Header closeButton>
-            <Offcanvas.Title>Leaderboard</Offcanvas.Title>
+            <Offcanvas.Title>Profile</Offcanvas.Title>
           </Offcanvas.Header>
           <Offcanvas.Body>
             Some text as placeholder. In real life you can have the elements you
@@ -30,4 +30,4 @@ function Leaderboard() {
     );
   }
 
-  export default Leaderboard
+  export default Profile

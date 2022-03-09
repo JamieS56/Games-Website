@@ -1,3 +1,9 @@
+/* ------General------ */
+.center{
+    text-align: center;
+}
+
+/* -------Icon------- */
 .icon{
     border: solid black 1px;
     border-radius: 20px;
@@ -6,19 +12,61 @@
     margin: 20px auto;
     overflow: hidden;
 }
+.icon > img{
+    width:100%;
+}
+
+/* --------Search Bar-------- */
 #search-bar{
     border-radius: 20%;
     width: 85%;
     margin: 40px auto ;
 }
-.center{
-    text-align: center;
+#search-bar > div > input{
+    border-right: none;
+
+
 }
 .seperator{
     border: 0.5px solid black;
     width:90%;
     margin:40px auto;
 }
-.icon > img{
+#search-bar-icon-container{
+    background-color: white;
+    border-left: none;
+}
+
+
+/* --------Leaderboard/Profile---------- */
+.offcanvas-page{
+    width:100%;
+    max-width: 800px;
+}
+.offcanvas-button{
+    background: #F3F3F3;
+    border: black 1px solid;
+    border-radius: 10px;
+    max-width: 47px;
+
+}
+.offcanvas-icon{
+    color: black;
+}
+#leaderboard-button{
+    float: left;
+}
+#profile-button{
+    float: right;
+}
+#buttons-row{
+    justify-content: space-between;
+    margin:10px;
+}
+.button-footer{
+    background-color: white;
+    position: fixed;
+    left:0;
+    bottom: 0;
     width:100%;
 }

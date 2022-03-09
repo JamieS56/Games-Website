@@ -7,8 +7,8 @@ function SearchBar(){
     return(
         <Form id="search-bar" className="col-12">
             <div className="input-group mb-3">
-                <input type="text" className="form-control"  aria-label="Search Bar" aria-describedby="basic-addon2"/>
-                <div className="input-group-text" id="basic-addon2">
+                <input type="text" className="form-control"  aria-label="Search Bar" aria-describedby="search-bar-icon-container"/>
+                <div id="search-bar-icon-container"className="input-group-text">
                     <span className="material-icons">search</span>
                 </div>
             </div>

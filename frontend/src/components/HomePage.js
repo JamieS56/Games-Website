@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 
 import Row from "react-bootstrap/esm/Row";
-import Offcanvas from 'react-bootstrap/Offcanvas'
 import Button from 'react-bootstrap/Button'
 
 import SearchBar from "./SearchBar"
-import Example from "./Leaderboard"
+import Leaderboard from "./Leaderboard"
+import Profile from "./Profile";
 
 import OXIcon from "./icons/O-X-Icon"
 import ChessIcon from "./icons/Chess-Icon";
@@ -50,6 +50,7 @@ function HomePage(){
                 <SearchBar />
             </div>
 
+
             <div className="seperator"></div>
 
             <div className="container">
@@ -58,7 +59,14 @@ function HomePage(){
                 </Row>
             </div>
 
-            {/* <Example/> */}
+            <div className="button-footer">
+                <Row id="buttons-row" absolute="bottom" >
+                        <Leaderboard/>
+                        <Profile/>
+                </Row>
+
+            </div>
+
 
         </div>
         

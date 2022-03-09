@@ -12,7 +12,7 @@ function Leaderboard() {
     return (
       <>
         <Button id="leaderboard-button" className='offcanvas-button col-6' variant="primary" onClick={handleShow}>
-        <span class="material-icons offcanvas-icon">
+        <span className="material-icons offcanvas-icon">
           emoji_events
         </span>
         </Button>

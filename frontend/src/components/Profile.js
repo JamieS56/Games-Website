@@ -12,7 +12,7 @@ function Profile() {
     return (
       <>
         <Button id="profile-button" className="offcanvas-button col-6" onClick={handleShow}>
-        <span class="material-icons offcanvas-icon">
+        <span className="material-icons offcanvas-icon">
             person
         </span>
         </Button>

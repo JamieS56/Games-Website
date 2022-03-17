@@ -1,8 +1,30 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import Offcanvas from 'react-bootstrap/Offcanvas'
 import Button from 'react-bootstrap/esm/Button'
 import Form from 'react-bootstrap/Form'
 
+
+function handleAccounts() {
+
+  useEffect(() => {
+    const apiURL = 'http://127.0.0.1:8000/users'
+    fetch(apiURL)
+      .then((data) => data.json())
+      .then((users) => {
+        console.log(users);
+
+      });
+  })
+
+}
+    
+function AccountsButton() {
+  return (
+  <button onClick={handleAccounts} variant="primary">
+    get accounts
+  </button>
+  )
+}
 
 function LoginPage(props) {
   return (
@@ -25,6 +47,8 @@ function LoginPage(props) {
   );
 }
 
+
+
 function LogoutPage(props) {
   return (
     <button onClick={props.onClick}>
@@ -33,64 +57,33 @@ function LogoutPage(props) {
   );
 }
 
-function AccountsButton(props) {
-  return (
-  <button onClick={props.onClick} variant="primary">
-    get accounts
-  </button>
+
+  
+function LoginControl(props) {
+  const [loggedInStatus, setLogIn] = useState(props.isLoggedIn)
+  let button
+
+  if (loggedInStatus) {
+    button = <LogoutPage onClick={() => setLogIn(false)} />;
+  } else {
+    button = <LoginPage onClick={() => setLogIn(true)} />;
+  }
+
+
+  return(
+    <>
+      <Offcanvas.Header closeButton>
+        <Offcanvas.Title>Profile</Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+          {button}
+          <AccountsButton />
+        </Offcanvas.Body>
+    </>
   )
 }
-  
-class LoginControl extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleLoginClick = this.handleLoginClick.bind(this);
-    this.handleLogoutClick = this.handleLogoutClick.bind(this);
-    this.state = {isLoggedIn: false};
-  }
-
-  handleLoginClick() {
-    this.setState({isLoggedIn: true});
-  }
-
-  handleLogoutClick() {
-    this.setState({isLoggedIn: false});
-  }
-
-  handleAccounts() {
-    const apiURL = 'http://127.0.0.1:8000/users'
-    fetch(apiURL)
-      .then((response) => response.json())
-      .then((data) => console.log(data))
-  }
-
-  render() {
-    const isLoggedIn = this.state.isLoggedIn;
-    let button;
-
-    if (isLoggedIn) {
-      button = <LogoutPage onClick={this.handleLogoutClick} />;
-    } else {
-      button = <LoginPage onClick={this.handleLoginClick} />;
-    }
 
 
-    return(
-      <>
-        <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Profile</Offcanvas.Title>
-          </Offcanvas.Header>
-          <Offcanvas.Body>
-            {button}
-            <AccountsButton onClick={this.handleAccounts}/>
-
-
-          </Offcanvas.Body>
-      </>
-    )
-  }
-
-}
 
 function Profile() {
     const [show, setShow] = useState(false);
@@ -107,7 +100,7 @@ function Profile() {
         </Button>
   
         <Offcanvas className='offcanvas-page' show={show} onHide={handleClose}  placement={'end'}>
-          <LoginControl />
+          <LoginControl isLoggedIn={false} />
         </Offcanvas>
       </>
     );

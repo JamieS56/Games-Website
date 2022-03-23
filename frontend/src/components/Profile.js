@@ -4,27 +4,8 @@ import Button from 'react-bootstrap/esm/Button'
 import Form from 'react-bootstrap/Form'
 
 
-function handleAccounts() {
 
-  useEffect(() => {
-    const apiURL = 'http://127.0.0.1:8000/users'
-    fetch(apiURL)
-      .then((data) => data.json())
-      .then((users) => {
-        console.log(users);
 
-      });
-  })
-
-}
-    
-function AccountsButton() {
-  return (
-  <button onClick={handleAccounts} variant="primary">
-    get accounts
-  </button>
-  )
-}
 
 function LoginPage(props) {
   return (
@@ -60,8 +41,33 @@ function LogoutPage(props) {
 
   
 function LoginControl(props) {
+
   const [loggedInStatus, setLogIn] = useState(props.isLoggedIn)
+  const [accounts, setAccounts] = useState([])
   let button
+
+
+  async function HandleGetAccounts(){
+    const apiURL = 'http://127.0.0.1:8000/users/'
+
+    try {
+
+      const response = await fetch(apiURL)
+
+      if(!response.ok) {
+        throw new Error(`Error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      setAccounts(result);
+
+    } catch(err) {
+      console.log(err)
+    }
+  
+  }
+
+
 
   if (loggedInStatus) {
     button = <LogoutPage onClick={() => setLogIn(false)} />;
@@ -77,7 +83,10 @@ function LoginControl(props) {
         </Offcanvas.Header>
         <Offcanvas.Body>
           {button}
-          <AccountsButton />
+          <button variant="primary" onClick={HandleGetAccounts}>
+            get accounts
+          </button>
+          {accounts.map((account) => <h1 key={account.id}>{account.username}</h1>)}
         </Offcanvas.Body>
     </>
   )
@@ -86,6 +95,7 @@ function LoginControl(props) {
 
 
 function Profile() {
+
     const [show, setShow] = useState(false);
   
     const handleClose = () => setShow(false);

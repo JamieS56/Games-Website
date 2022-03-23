@@ -4,5 +4,5 @@ from .views import ProfileList
 app_name = 'blog_api'
 
 urlpatterns = [
-    path('', ProfileList.as_view(), name='listcreate'),
+    path('', ProfileList, name='listcreate'),
 ]

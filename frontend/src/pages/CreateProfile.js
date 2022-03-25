@@ -13,20 +13,27 @@ function CreateProfile () {
     const [validated, setValidated] = useState(false);
 
     const handleSubmit = (event) => {
+
       const form = event.currentTarget;
+
+      console.log($('#Password').val())
+      console.log($('#ConfirmPassword').val())
+
       if (form.checkValidity() === false) {
         event.preventDefault();
         event.stopPropagation();
 
       }
-      if ($('#Password').value != $('#ConfirmPassword').value) {
+      if ($('#Password').val() != $('#ConfirmPassword').val()) {
         event.preventDefault();
         event.stopPropagation();
-        $('.formPassword > input').prop('type', 'invalid')
+
+        $('#CreateAccountForm').removeClass('was-validated')
+
+        $('.formPassword > input').addClass('is-invalid')
         $('.passwordError').text('The passwords you entered are not the same.')
       }
 
-  
       setValidated(true);
     };
 
@@ -36,7 +43,7 @@ function CreateProfile () {
             <Row>
                 <h2>Create Profile</h2>
             </Row>
-            <Form noValidate validated={validated} onSubmit={handleSubmit}>
+            <Form id='CreateAccountForm' noValidate validated={validated} onSubmit={handleSubmit}>
                 <Row>
                     <Col>
                         <Form.Group className="mb-3" controlId="FirstName">

@@ -49,22 +49,30 @@ function LoginControl(props) {
 
   async function HandleGetAccounts(){
     const apiURL = 'http://127.0.0.1:8000/users/'
-
     try {
-
       const response = await fetch(apiURL)
-
       if(!response.ok) {
         throw new Error(`Error! status: ${response.status}`);
       }
-
       const result = await response.json();
       setAccounts(result);
-
     } catch(err) {
       console.log(err)
     }
-  
+  }
+
+  async function HandleGetAccounts(){
+    const apiURL = 'http://127.0.0.1:8000/users/create-profile'
+    try {
+      const response = await fetch(apiURL)
+      if(!response.ok) {
+        throw new Error(`Error! status: ${response.status}`);
+      }
+      const result = await response.json();
+      setAccounts(result);
+    } catch(err) {
+      console.log(err)
+    }
   }
 
 

@@ -15,3 +15,11 @@ def ProfileList(request):
         serializer_class = UserSerializer
     return Response(list(queryset.values()))
 
+
+@api_view(['GET', 'POST'])
+def CreateProfile(request):
+
+    if request.method == 'GET':
+        queryset = User.objects.all()
+        serializer_class = UserSerializer
+    return Response(list(queryset.values()))

@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { render } from "react-dom";
-import HomePage from "./HomePage";
-import Game from "./games/O-X/O-X";
+import HomePage from "./pages/HomePage.js";
+import CreateProfile from "./pages/CreateProfile";
+import Game from "./components/games/O-X/O-X";
 
 import {
   BrowserRouter as Router,
@@ -14,6 +15,7 @@ function MyRouter(){
     <Router>
       <Routes>
         <Route exact path="/" element={<HomePage />} />
+        <Route path="create-profile" element={<CreateProfile />} />
         <Route path="O-X" element={<Game />} />
         
       </Routes>

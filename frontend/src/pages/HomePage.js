@@ -1,18 +1,17 @@
 import React, { Component } from "react";
 
 import Row from "react-bootstrap/esm/Row";
-import Button from 'react-bootstrap/Button'
 
-import SearchBar from "./SearchBar"
-import Leaderboard from "./Leaderboard"
-import Profile from "./Profile";
+import SearchBar from "../components/SearchBar"
+import Leaderboard from "../components/Leaderboard"
+import Profile from "../components/Profile";
 
-import OXIcon from "./icons/O-X-Icon"
-import ChessIcon from "./icons/Chess-Icon";
-import Connect4Icon from "./icons/Connect-4-Icon";
-import LineGameIcon from "./icons/LineGame-Icon";
-import RPSIcon from "./icons/RPS-Icon";
-import SpeedDotsIcon from "./icons/SpeedDots-Icon";
+import OXIcon from "../components/icons/O-X-Icon"
+import ChessIcon from "../components/icons/Chess-Icon";
+import Connect4Icon from "../components/icons/Connect-4-Icon";
+import LineGameIcon from "../components/icons/LineGame-Icon";
+import RPSIcon from "../components/icons/RPS-Icon";
+import SpeedDotsIcon from "../components/icons/SpeedDots-Icon";
 
 
 

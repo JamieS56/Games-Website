@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import Offcanvas from 'react-bootstrap/Offcanvas'
-import Button from 'react-bootstrap/esm/Button'
+import Button from 'react-bootstrap/esm/Button';
 import Form from 'react-bootstrap/Form'
-
-
+import { Link } from 'react-router-dom'
 
 
 
@@ -29,7 +28,6 @@ function LoginPage(props) {
 }
 
 
-
 function LogoutPage(props) {
   return (
     <button onClick={props.onClick}>
@@ -39,16 +37,14 @@ function LogoutPage(props) {
 }
 
 
-  
 function LoginControl(props) {
 
   const [loggedInStatus, setLogIn] = useState(props.isLoggedIn)
   const [accounts, setAccounts] = useState([])
   let button
 
-
   async function HandleGetAccounts(){
-    const apiURL = 'http://127.0.0.1:8000/users/'
+    const apiURL = 'http://127.0.0.1:8000/api/users/'
     try {
       const response = await fetch(apiURL)
       if(!response.ok) {
@@ -60,29 +56,12 @@ function LoginControl(props) {
       console.log(err)
     }
   }
-
-  async function HandleGetAccounts(){
-    const apiURL = 'http://127.0.0.1:8000/users/create-profile'
-    try {
-      const response = await fetch(apiURL)
-      if(!response.ok) {
-        throw new Error(`Error! status: ${response.status}`);
-      }
-      const result = await response.json();
-      setAccounts(result);
-    } catch(err) {
-      console.log(err)
-    }
-  }
-
-
 
   if (loggedInStatus) {
     button = <LogoutPage onClick={() => setLogIn(false)} />;
   } else {
     button = <LoginPage onClick={() => setLogIn(true)} />;
   }
-
 
   return(
     <>
@@ -95,11 +74,13 @@ function LoginControl(props) {
             get accounts
           </button>
           {accounts.map((account) => <h1 key={account.id}>{account.username}</h1>)}
+          <Link to={'create-profile'}>
+            <Button>Create Account</Button>
+          </Link>
         </Offcanvas.Body>
     </>
   )
 }
-
 
 
 function Profile() {
@@ -116,12 +97,12 @@ function Profile() {
             person
         </span>
         </Button>
-  
         <Offcanvas className='offcanvas-page' show={show} onHide={handleClose}  placement={'end'}>
           <LoginControl isLoggedIn={false} />
+
         </Offcanvas>
       </>
     );
   }
 
-  export default Profile
+export default Profile

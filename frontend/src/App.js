@@ -17,14 +17,12 @@ function MyRouter(){
         <Route exact path="/" element={<HomePage />} />
         <Route path="create-profile" element={<CreateProfile />} />
         <Route path="O-X" element={<Game />} />
-        
       </Routes>
     </Router>
   );
 }
 
 export default class App extends Component {
-
 
   render() { 
     return (
@@ -34,7 +32,6 @@ export default class App extends Component {
     );
   }
 }
-
 
 
 const appDiv = document.getElementById("root");

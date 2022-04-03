@@ -6,6 +6,7 @@ import Row from 'react-bootstrap/esm/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Feedback from 'react-bootstrap/Feedback'
+import postFormData from '../../helpers/postFormData'
 
 
 function CreateProfile () {
@@ -15,15 +16,14 @@ function CreateProfile () {
     const handleSubmit = (event) => {
 
       const form = event.currentTarget;
-
-      console.log($('#Password').val())
-      console.log($('#ConfirmPassword').val())
-
+      let passwordChecks = true
+     
       if (form.checkValidity() === false) {
         event.preventDefault();
         event.stopPropagation();
-
+        
       }
+    
       if ($('#Password').val() != $('#ConfirmPassword').val()) {
         event.preventDefault();
         event.stopPropagation();
@@ -32,6 +32,15 @@ function CreateProfile () {
 
         $('.formPassword > input').addClass('is-invalid')
         $('.passwordError').text('The passwords you entered are not the same.')
+
+        passwordChecks = false
+      }
+
+      if (form.checkValidity() && passwordChecks){
+          const address = 'http://127.0.0.1:8000/api/create-profile/'
+          const form = document.getElementById('CreateAccountForm')
+          postFormData(address, form, event)
+
       }
 
       setValidated(true);
@@ -48,31 +57,31 @@ function CreateProfile () {
                     <Col>
                         <Form.Group className="mb-3" controlId="FirstName">
                           <Form.Label>First Name</Form.Label>
-                          <Form.Control required type="text" placeholder="First Name" />
+                          <Form.Control required type="text" placeholder="First Name" name='first_name' />
                         </Form.Group>
                     </Col>
                     <Col>
                         <Form.Group className="mb-3" controlId="LastName">
                           <Form.Label>Last Name</Form.Label>
-                          <Form.Control required type="text" placeholder="Last Name" />
+                          <Form.Control required type="text" placeholder="Last Name" name='last_name' />
                         </Form.Group>
                     </Col>
                 </Row>
 
                 <Form.Group className="mb-3" controlId="Username">
                   <Form.Label>Username</Form.Label>
-                  <Form.Control required type="text" placeholder="Username" />
+                  <Form.Control required type="text" placeholder="Username" name='username' />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="Email">
                   <Form.Label>Email address</Form.Label>
-                  <Form.Control required type="email" placeholder="Enter email" />
+                  <Form.Control required type="email" placeholder="Enter email" name='email' />
 
                 </Form.Group>
 
                 <Form.Group className="mb-3 formPassword" controlId="Password">
                   <Form.Label>Password</Form.Label>
-                  <Form.Control required type="password" placeholder="Password" />
+                  <Form.Control required type="password" placeholder="Password" name='password' />
                 </Form.Group>
 
                 <Form.Group className="mb-3 formPassword" controlId="ConfirmPassword">

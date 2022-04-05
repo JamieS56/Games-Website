@@ -1,19 +1,9 @@
-
-from http.client import HTTPResponse
-from rest_framework import generics
+from msilib.schema import Error
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework import status
-from django.http import HttpResponse, Http404
-from api import serializers
 from api.serializers import UserSerializer
 
-from .customValidators import validate_email
-
-import json
-
 from django.contrib.auth.models import User
-
 
 @api_view(['GET', 'POST'])
 def ProfileList(request):
@@ -27,20 +17,26 @@ def ProfileList(request):
 @api_view(['POST'])
 def CreateProfile(request):
 
-
     if request.method == 'POST':
+
+        # If method is POST it will put the data into an instance of the User serializer.
         request_data = request.data
         serializer = UserSerializer(data=request_data)
 
-        if not serializer.is_valid():
-            return Response(data=serializer.errors, status=400)
+        if serializer.is_valid():
+
+            # The validity is checked of the serializer and if valid attempted to save and returns status 200.
+            # If an error occurs it is caught and returned as a server error.
+            try :
+                serializer.save()
+                return Response(status=200)
+            except Error as e :
+                print(e)
+                return Response(data=f'server error {e}', status=500) 
         
         else:
-            try :
-                print('3rd')
-                # serializer.save()
-                return Response(status=200)
-            except :
-                print('failed')
-                return Response(data='server error', status=500)
+
+            # If the serializer is not valid server returns whats wrong and 400 status
+            return Response(data=serializer.errors, status=400)
+
 

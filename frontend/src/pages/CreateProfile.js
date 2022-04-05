@@ -8,42 +8,66 @@ import Container from 'react-bootstrap/Container'
 import Feedback from 'react-bootstrap/Feedback'
 import postFormData from '../../helpers/postFormData'
 
-
-function CreateProfile () {
+function CreateProfile() {
 
     const [validated, setValidated] = useState(false);
 
     const handleSubmit = (event) => {
+        const form = event.currentTarget;
+        let passwordChecks = true
 
-      const form = event.currentTarget;
-      let passwordChecks = true
-     
-      if (form.checkValidity() === false) {
-        event.preventDefault();
-        event.stopPropagation();
-        
-      }
-    
-      if ($('#Password').val() != $('#ConfirmPassword').val()) {
-        event.preventDefault();
-        event.stopPropagation();
+        // HTML validity checks 
+        if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
 
-        $('#CreateAccountForm').removeClass('was-validated')
+        }
 
-        $('.formPassword > input').addClass('is-invalid')
-        $('.passwordError').text('The passwords you entered are not the same.')
 
-        passwordChecks = false
-      }
+        // Checks if passwords are the same.
+        if ($('#Password').val() != $('#ConfirmPassword').val()) {
+            event.preventDefault();
+            event.stopPropagation();
+            $('#CreateAccountForm').removeClass('was-validated')
+            $('.formPassword > input').addClass('is-invalid')
+            $('.passwordError').text('The passwords you entered are not the same.')
 
-      if (form.checkValidity() && passwordChecks){
-          const address = 'http://127.0.0.1:8000/api/create-profile/'
-          const form = document.getElementById('CreateAccountForm')
-          postFormData(address, form, event)
+            passwordChecks = false
+        }
 
-      }
 
-      setValidated(true);
+        // If client side validation is passed the form data is sent to the server
+        if (form.checkValidity() && passwordChecks) {
+            const address = 'http://127.0.0.1:8000/api/create-profile/'
+            const form = document.getElementById('CreateAccountForm')
+            const getResponse = async () => {
+                const response = await postFormData(address, form, event);
+
+                if (response.status == 200) {
+                    // If the data is processed successfully user is taken to home page to login
+                    console.log('success')
+                    window.location.href = '/create-profile'
+
+                } else if (response.status == 400) {
+                    // If data is not processed the server will return the relevent errors which get displayed to the user
+
+                    let data = await response.json()
+                    const errorBox = document.getElementById('errorBox')
+                    errorBox.innerHTML = ``
+
+                    for (const i in data) {
+                        console.log(data[i])
+                        errorBox.innerHTML += `${data[i]} <br>`
+                    }
+                }
+            }
+
+
+            getResponse();
+
+        }
+
+        setValidated(true);
     };
 
     return (
@@ -88,7 +112,7 @@ function CreateProfile () {
                   <Form.Label>Confirm Password</Form.Label>
                   <Form.Control required type="password" placeholder="Confirm Password" />
                 </Form.Group>
-                <div className='passwordError'></div>
+                <div id='errorBox'></div>
 
                 <Button variant="primary" type="submit">
                   Create Account

@@ -44,8 +44,6 @@ INSTALLED_APPS = [
     # My apps
     'api',
     'frontend',
-    'profiles',
-
 
 ]
 

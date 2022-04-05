@@ -1,10 +1,14 @@
 
+from http.client import HTTPResponse
 from rest_framework import generics
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, Http404
+from api import serializers
 from api.serializers import UserSerializer
+
+from .customValidators import validate_email
 
 import json
 
@@ -25,15 +29,18 @@ def CreateProfile(request):
 
 
     if request.method == 'POST':
-        data = json.loads(request.body.decode('utf-8'))
-        print(data)
-        print('2nd')
-        
-        serializer = UserSerializer(data=data)
-        
+        request_data = request.data
+        serializer = UserSerializer(data=request_data)
 
-        if serializer.is_valid():
-            print('3rd')
-            serializer.save()
+        if not serializer.is_valid():
+            return Response(data=serializer.errors, status=400)
+        
+        else:
+            try :
+                print('3rd')
+                # serializer.save()
+                return Response(status=200)
+            except :
+                print('failed')
+                return Response(data='server error', status=500)
 
-        return HttpResponseRedirect('http://127.0.0.1:8000/create-profile')

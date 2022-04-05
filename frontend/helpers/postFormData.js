@@ -43,7 +43,5 @@ export default async function postFormData(address, form, event){
         console.log(e)
     })
 
-    console.log(jsonData)
-
-    return response.json()
+    return response
 }

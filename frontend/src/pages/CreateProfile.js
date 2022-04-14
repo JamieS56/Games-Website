@@ -23,13 +23,16 @@ function CreateProfile() {
 
         }
 
+        
+
 
         // Checks if passwords are the same.
         if ($('#Password').val() != $('#ConfirmPassword').val()) {
+            console.log('hi')
             event.preventDefault();
             event.stopPropagation();
-            $('#CreateAccountForm').removeClass('was-validated')
-            $('.formPassword > input').addClass('is-invalid')
+            // $('#CreateAccountForm').removeClass('was-validated')
+            $('.formPassword > input').addClass('is-invalid form-control:invalid')
             $('.passwordError').text('The passwords you entered are not the same.')
 
             passwordChecks = false
@@ -38,15 +41,17 @@ function CreateProfile() {
 
         // If client side validation is passed the form data is sent to the server
         if (form.checkValidity() && passwordChecks) {
+            
             const address = 'http://127.0.0.1:8000/api/create-profile/'
             const form = document.getElementById('CreateAccountForm')
             const getResponse = async () => {
                 const response = await postFormData(address, form, event);
+                console.log(response)
 
                 if (response.status == 200) {
                     // If the data is processed successfully user is taken to home page to login
                     console.log('success')
-                    window.location.href = '/create-profile'
+                    window.location.href = '/'
 
                 } else if (response.status == 400) {
                     // If data is not processed the server will return the relevent errors which get displayed to the user
@@ -56,7 +61,15 @@ function CreateProfile() {
                     errorBox.innerHTML = ``
 
                     for (const i in data) {
+                        // $('#CreateAccountForm').removeClass('was-validated')
                         console.log(data[i])
+                        console.log(i)
+
+                        if ( i == 'username'){
+                            $('#username > input').addClass('is-invalid form-control:invalid')
+                        } else if( i == 'email'){
+                            $('#email > input').addClass('is-invalid form-control:invalid')
+                        }
                         errorBox.innerHTML += `${data[i]} <br>`
                     }
                 }
@@ -67,7 +80,7 @@ function CreateProfile() {
 
         }
 
-        setValidated(true);
+        
     };
 
     return (
@@ -92,12 +105,12 @@ function CreateProfile() {
                     </Col>
                 </Row>
 
-                <Form.Group className="mb-3" controlId="Username">
+                <Form.Group className="mb-3" id='username' controlId="Username">
                   <Form.Label>Username</Form.Label>
                   <Form.Control required type="text" placeholder="Username" name='username' />
                 </Form.Group>
 
-                <Form.Group className="mb-3" controlId="Email">
+                <Form.Group className="mb-3" id='email' controlId="Email">
                   <Form.Label>Email address</Form.Label>
                   <Form.Control required type="email" placeholder="Enter email" name='email' />
 
@@ -112,7 +125,7 @@ function CreateProfile() {
                   <Form.Label>Confirm Password</Form.Label>
                   <Form.Control required type="password" placeholder="Confirm Password" />
                 </Form.Group>
-                <div id='errorBox'></div>
+                <div id='errorBox' className='mb-3'></div>
 
                 <Button variant="primary" type="submit">
                   Create Account

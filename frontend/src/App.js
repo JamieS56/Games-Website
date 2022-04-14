@@ -22,7 +22,17 @@ function MyRouter(){
   );
 }
 
+function isUserLoggedIn(){
+  if (!sessionStorage.logged_in){
+    
+  }else{
+
+  }
+}
+
 export default class App extends Component {
+
+  isUserLoggedIn
 
   render() { 
     return (

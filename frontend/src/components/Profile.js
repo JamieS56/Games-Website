@@ -3,24 +3,60 @@ import Offcanvas from 'react-bootstrap/Offcanvas'
 import Button from 'react-bootstrap/esm/Button';
 import Form from 'react-bootstrap/Form'
 import { Link } from 'react-router-dom'
+import postFormData from '../../helpers/postFormData'
 
 
 
 function LoginPage(props) {
+
+  const [validated, setValidated] = useState(false);
+
+  const handleLogin = (event) =>{
+    const address = 'http://127.0.0.1:8000/api/login/'
+    const form = document.getElementById('LoginForm')
+    const getResponse = async () => {
+      let response = await postFormData(address, form, event)
+
+      let data = await response.json()
+      console.log(data)
+      if(data == true){
+        props.setLogIn
+        sessionStorage.logged_in = true
+        window.location.href = '/'
+
+      }else {
+        const errorBox = document.getElementById('errorBox')
+        errorBox.innerHTML = ``
+        errorBox.innerHTML = 'Username or password was incorrect please try again.'
+
+      }
+    }
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+      setValidated(true)
+
+    }else{
+      getResponse()
+    }
+  }
+
   return (
-    <Form>
+    <Form id='LoginForm' noValidate validated={validated} onSubmit={handleLogin}>
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Username</Form.Label>
-        <Form.Control type="text" placeholder="Username" />
+        <Form.Control required type="text" placeholder="Username" name='username'/>
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicPassword">
         <Form.Label>Password</Form.Label>
-        <Form.Control type="password" placeholder="Password" />
+        <Form.Control required type="password" placeholder="Password" name='password'/>
       </Form.Group>
-      <button onClick={props.onClick} variant="primary" type="submit">
+      <Button variant="primary" type="submit">
         Login
-      </button>
+      </Button>
+      <div id='errorBox' className='mb-3'></div>
+
 
     </Form>
 
@@ -29,10 +65,19 @@ function LoginPage(props) {
 
 
 function LogoutPage(props) {
+  const handleLogout = () => {
+    props.setLogIn
+    sessionStorage.logged_in = false
+
+    console.log(`session storage ${sessionStorage.logged_in}`)
+    window.location.href = '/'
+
+  }
+
   return (
-    <button onClick={props.onClick}>
+    <Button onClick={handleLogout}>
       Logout
-    </button>
+    </Button>
   );
 }
 
@@ -40,27 +85,18 @@ function LogoutPage(props) {
 function LoginControl(props) {
 
   const [loggedInStatus, setLogIn] = useState(props.isLoggedIn)
-  const [accounts, setAccounts] = useState([])
-  let button
+  let page
+  console.log(`logged in status ${loggedInStatus}`)
 
-  async function HandleGetAccounts(){
-    const apiURL = 'http://127.0.0.1:8000/api/users/'
-    try {
-      const response = await fetch(apiURL)
-      if(!response.ok) {
-        throw new Error(`Error! status: ${response.status}`);
-      }
-      const result = await response.json();
-      setAccounts(result);
-    } catch(err) {
-      console.log(err)
-    }
-  }
-
-  if (loggedInStatus) {
-    button = <LogoutPage onClick={() => setLogIn(false)} />;
-  } else {
-    button = <LoginPage onClick={() => setLogIn(true)} />;
+  if (loggedInStatus == 'true') {
+    page = <LogoutPage setLogin={() => setLogIn(false)} />;
+  } else if(loggedInStatus == 'false') {
+    page = <>
+    <LoginPage setLogin={() => setLogIn(true)} />
+    <Link to={'create-profile'}>
+            <Button>Create Account</Button>
+    </Link>
+    </>;
   }
 
   return(
@@ -69,14 +105,7 @@ function LoginControl(props) {
         <Offcanvas.Title>Profile</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          {button}
-          <button variant="primary" onClick={HandleGetAccounts}>
-            get accounts
-          </button>
-          {accounts.map((account) => <h1 key={account.id}>{account.username}</h1>)}
-          <Link to={'create-profile'}>
-            <Button>Create Account</Button>
-          </Link>
+          {page}
         </Offcanvas.Body>
     </>
   )
@@ -98,7 +127,7 @@ function Profile() {
         </span>
         </Button>
         <Offcanvas className='offcanvas-page' show={show} onHide={handleClose}  placement={'end'}>
-          <LoginControl isLoggedIn={false} />
+          <LoginControl isLoggedIn={sessionStorage.logged_in} />
 
         </Offcanvas>
       </>

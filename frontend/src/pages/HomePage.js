@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Row from "react-bootstrap/esm/Row";
 import SearchBar from "../components/SearchBar"
 import Leaderboard from "../components/Leaderboard"
-import Profile from "../components/Profile";
+import Profile from "../components/Profile/Profile";
 import OXIcon from "../components/icons/O-X-Icon"
 import ChessIcon from "../components/icons/Chess-Icon";
 import Connect4Icon from "../components/icons/Connect-4-Icon";
@@ -33,7 +33,7 @@ function GetAllIcons(){
 }
 
  
-function HomePage(){
+function HomePage(props){
     return(
         <div className="center mx-auto">
             <div className="container">
@@ -48,7 +48,7 @@ function HomePage(){
             <div className="button-footer">
                 <Row id="buttons-row" absolute="bottom" >
                         <Leaderboard/>
-                        <Profile/>
+                        <Profile user={props.user}/>
                 </Row>
             </div>
         </div> 

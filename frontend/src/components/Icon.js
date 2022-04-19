@@ -4,35 +4,19 @@ import { Link, NavLink } from 'react-router-dom'
 import Col from "react-bootstrap/esm/Col";
 
 
-
-
-export default class Icon extends React.Component{
-
+export default function Icon(props){
     
 
-    constructor(props){
-        super(props);
-        this.state={
-            link: props.link,
-            gamePicture: props.gamePicture
-
-        };
-    }
+    return(
+        <Col xs={6} sm={4} md={3} lg={2}>
+            <Link to = {`${props.link}`}>
+                <div  className = 'icon'>
+                    <img src={props.gamePicture}/>
+                </div>       
+     
+            </Link>
+        </Col>
+    );
     
-    render() {
-        return(
-            <Col xs={6} sm={4} md={3} lg={2}>
-                <Link to = {`${this.state.link}`}>
-                    <div  className = 'icon'>
-                        <img src={this.state.gamePicture}/>
-                    </div>       
-         
-
-
-
-                </Link>
-            </Col>
-        );
-    }
     
 }

@@ -1,7 +1,6 @@
 import Icon from "../Icon";
-import { Link, NavLink } from 'react-router-dom'
 import logo from '../../../static/images/icons/O-X.png'
-
+import React, { Component } from "react";
 
 
 export default function OXIcon(){

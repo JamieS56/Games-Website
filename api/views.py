@@ -7,6 +7,7 @@ from django.contrib.auth.hashers import make_password, check_password
 
 from django.contrib.auth.models import User
 
+import json
 
 @api_view(['GET', 'POST'])
 def ProfileList(request):
@@ -15,6 +16,30 @@ def ProfileList(request):
         queryset = User.objects.all()
         serializer_class = UserSerializer
     return Response(list(queryset.values()))
+
+@api_view(['GET', 'POST'])
+def getProfile(request):
+
+    request_data = request.data
+    print(request_data)
+    
+    if request.method == 'POST':
+        try:
+            print(f'request data {request_data["username"]}')
+            print(User.objects.all())
+            user = User.objects.get(username=request_data['username'])
+            print(f'user is... {user}')
+            # user = json.dumps(user)
+
+        except:
+            print('fuck')
+            return Response(status=404)
+
+    return Response(data = {
+        'username':user.username,
+        'email': user.email,
+        'first_name': user.first_name
+    })
 
 
 @api_view(['POST'])
@@ -48,7 +73,6 @@ def CreateProfile(request):
 
 @api_view(['POST'])
 def Login(request):
-    print('hello')
 
     if request.method == 'POST':
 
@@ -56,8 +80,6 @@ def Login(request):
         request_data = request.data
         try :
             user = User.objects.get(username=request_data['username'])
-            print(user.password)
-            print(request_data['password'])
             if user.password == request_data['password']:
 
                 return Response(data=True, status=200)
